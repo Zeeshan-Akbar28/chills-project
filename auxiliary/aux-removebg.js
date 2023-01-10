@@ -22,25 +22,22 @@ async function bgRemoveURL(img_url, save_in){
         output_path
 
     })  .then(result => {
+            rmbg_filename = save_in['record']['fields']['raw_image'][0]['filename'].split(".")[0]
+            rmbg_filename += "-bg_removed.png"
+            
             const base64img = result.base64img            
 
-            if (save_in['location'] == 'airtable'){
-                imgbb_aux.toImgbbURL(base64img) .then(res=> {
+            if (save_in['location'] == 'imgbb'){
+                imgbb_aux.toImgbbURL(base64img).then(res=> {
     
-                    const img_http_url = res['url']
+                    save_in['img_url'] = res['url']
     
-                    const rec = save_in['record_place']
-                    img_obj_array = [{
-                        'url': img_http_url,
-                        'filename': 'new.png',
-                    }]
-                    
-                    airtable_aux.updateImageField(rec, img_obj_array)    
+                    airtable_aux.updateImageField(save_in)    
                 })
 
             } 
-            else if (save_in['location'] == 'project_repo'){
-                fs.writeFileSync('stack-abuse-logo-out.png', buff)
+            else if (save_in['location'] == 'server_repo'){
+                fs.writeFile(rmbg_filename, base64img)
             }
 
         })
@@ -55,3 +52,4 @@ async function bgRemoveURL(img_url, save_in){
 module.exports = {
     bgRemoveURL
 }
+

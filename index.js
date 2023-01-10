@@ -1,36 +1,51 @@
-const removebg_aux = require('./auxiliary/aux-removebg')
-const global_var =  require('./utils/global_var')
+const express = require('express')
+const removebg_aux =  require('./auxiliary/aux-removebg')
+const cron = require('node-cron')
+const app = express();
+ 
+// Defining port number
+const PORT = 8000;                 
+ 
+// Function to serve all static files inside public directory.
+app.use(express.static('public')); 
+app.use('/images', express.static('images'));
 
-// initializing the airtable
-airtable_view = global_var.airtable_name
-
-// ------------------------------------------------------------------------------------------
-// GET Request
-// ------------------------------------------------------------------------------------------
 
 
-airtable_view.select({}).eachPage((records, fetchNextPage) =>{
-  // here we have each record
-
-  records.forEach( record => {
-    
-    if (!record.get('is_processed') && record.get('raw_image')){   
-      
-      record.get("raw_image").forEach(img => {  
-
-        save_in = {'location': 'airtable', 'record_place': record}
-        
-        removebg_aux.bgRemoveURL(img['url'], save_in)
-
-      })
+function bgRemoveAndUpdate(){
+    airtable_view.select({}).eachPage((records, fetchNextPage) =>{
      
+      records.forEach( record => {
+        if (!record.get('is_processed') && record.get('raw_image')){   
+          
+          record.get("raw_image").forEach(img => {  
+    
+            save_in = {'location': 'imgbb', 'record': record, 'img_url': ''}  
+            removebg_aux.bgRemoveURL(img['url'], save_in)
+    
+          })
+        }
+        fetchNextPage()
       
-    }
+      })
+      
+    })
+}
+  
 
-    fetchNextPage()
-  
-  })
-  
+// ------------------------------------------------------------------------------------------
+// Main code loop
+// ------------------------------------------------------------------------------------------
+
+const main_task = cron.schedule('*/5 * * * * *', ()=> {
+    bgRemoveAndUpdate()
 
 })
+
+app.listen(PORT, () => {
+    console.log(`Running server on PORT ${PORT}...`);
+    main_task.start()
+    
+  })
+
 

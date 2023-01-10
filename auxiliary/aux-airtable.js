@@ -1,24 +1,32 @@
-const airtable = require("airtable")
 const global_var =  require('./../utils/global_var')
 
 
+// initializing the airtable
 
-function updateImageField(record, img_obj_array){
+airtable_view = global_var.airtable_name
 
-    global_var.airtable_name.update(record['id'],
-        {
-            "bg_removed": img_obj_array,
-            "is_processed": true
 
-        }      
-        , function(err, records) {
-        if (err) {
-          console.error(err);
-          return;
-        }
+
+
+function updateImageField(save_in){
+
+  const record = save_in['record']
+
+  const img_obj_array = [{'url': save_in['img_url'], 'filename': 'bg_removed.png'}]
+
+  global_var.airtable_name.update(record['id'],
+    {
+        "bg_removed": img_obj_array,
+        "is_processed": true
+    }      
+    , function(err, records) {
+    if (err) {
+      console.error(err);
+      return
     }
-    
-    )
+  }
+  
+  )
 
 }
  
