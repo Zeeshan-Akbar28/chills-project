@@ -1,0 +1,32 @@
+removebg 
+--------
+api key: g5VoUyafyekjf1AnNTgcPdBh
+login: fahadsohail777@gmail.com (signup with g account)
+
+airtable
+https://egghead.io/lessons/node-js-connect-node-js-to-an-airtable-database
+----------
+token: patfhYd0brYxEZ37b.c2e169018e9ceda756ed602835aa6a35e0faf9dbd5761e3c2f036aa0e3b01d20
+api key: keyapkixo7gGuguaf
+login: fahadsohail777@gmail.com (signup with g account)
+base_id: app3lSwhZb23G3Gnh
+
+
+
+
+
+============================
+
+record_id
+
+rec33DzjyGUWgPELJ
+recIQNGtdeMEYI4Vm
+
+
+
+
+
+
+Pass: @qwer@1234
+
+api QsMw3E6AWxwyT3PBPdQgzuTN
