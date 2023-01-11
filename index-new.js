@@ -29,7 +29,7 @@ const endpoint = `https://api.airtable.com/v0/${base_id}/${table_name}`;
           if (!record.fields['is_processed']){
             const rec_id = record['id']
             console.log(record)
-            // let raw_img = record.get('raw_image')
+            // let raw_img = record.get('Original images')
           }
           
         });

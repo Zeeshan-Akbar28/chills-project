@@ -1,4 +1,4 @@
-record_imgs = record.get("raw_image") // getting data from raw_image field, it returns an array
+record_imgs = record.get("Original images") // getting data from Original images field, it returns an array
 
     record_imgs.forEach( img =>{
       data = img['url']     // TODO: send this url to the remove.bg app

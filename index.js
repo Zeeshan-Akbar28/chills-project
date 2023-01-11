@@ -1,8 +1,9 @@
+"use strict"
 const express = require('express')
 const removebg_aux =  require('./auxiliary/aux-removebg')
 const cron = require('node-cron')
 const app = express();
- 
+
 // Defining port number
 const PORT = 8000;                 
  
@@ -10,35 +11,41 @@ const PORT = 8000;
 app.use(express.static('public')); 
 app.use('/images', express.static('images'));
 
+// airtable_view = global_var.airtable_name
+
 
 
 function bgRemoveAndUpdate(){
-    airtable_view.select({}).eachPage((records, fetchNextPage) =>{
-     
-      records.forEach( record => {
-        if (!record.get('is_processed') && record.get('raw_image')){   
-          
-          record.get("raw_image").forEach(img => {  
+  airtable_view.select({}).eachPage((records, fetchNextPage) =>{
     
-            save_in = {'location': 'imgbb', 'record': record, 'img_url': ''}  
-            removebg_aux.bgRemoveURL(img['url'], save_in)
-    
-          })
-        }
-        fetchNextPage()
+        records.forEach( record => {
+          if (!record.get('is_processed') && record.get('Original images')){   
+            
+            record.get("Original images").forEach(img => {  
+                // console.log(img['url'])
+                let save_in = {'location': 'imgbb', 'record': record, 'img_url': ''}  
+                removebg_aux.bgRemoveURL(img['url'], save_in)
       
+              })
+          }
+          fetchNextPage()
+          
+        })
+        
       })
       
-    })
-}
-  
-
-// ------------------------------------------------------------------------------------------
-// Main code loop
-// ------------------------------------------------------------------------------------------
-
+    }
+    
+    
+    // ------------------------------------------------------------------------------------------
+    // Main code loop
+    // ------------------------------------------------------------------------------------------
+    
 const main_task = cron.schedule('*/5 * * * * *', ()=> {
+  try{
     bgRemoveAndUpdate()
+  } 
+  catch(er) { console.log(JSON.stringify(er), 'here in index.js')}
 
 })
 

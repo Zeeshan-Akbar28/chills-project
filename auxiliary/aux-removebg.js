@@ -22,8 +22,8 @@ async function bgRemoveURL(img_url, save_in){
         output_path
 
     })  .then(result => {
-            rmbg_filename = save_in['record']['fields']['raw_image'][0]['filename'].split(".")[0]
-            rmbg_filename += "-bg_removed.png"
+            // rmbg_filename = save_in['record']['fields']['Original images'][0]['filename'].split(".")[0]
+            // rmbg_filename += "-images without background.png"
             
             const base64img = result.base64img            
 
@@ -37,11 +37,11 @@ async function bgRemoveURL(img_url, save_in){
 
             } 
             else if (save_in['location'] == 'server_repo'){
-                fs.writeFile(rmbg_filename, base64img)
+                // fs.writeFile(rmbg_filename, base64img)
             }
 
         })
-        .catch(er => console.log(JSON.stringify(er), 'here error'))
+        .catch(er => console.log(JSON.stringify(er), 'here in aux-removebg'))
         
 }
 

@@ -16,7 +16,7 @@ function updateImageField(save_in){
 
   global_var.airtable_name.update(record['id'],
     {
-        "bg_removed": img_obj_array,
+        "images without background": img_obj_array,
         "is_processed": true
     }      
     , function(err, records) {
