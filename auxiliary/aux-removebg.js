@@ -1,4 +1,4 @@
-// "use strict"
+"use strict"
 
 const fs = require('fs')
 const airtable_aux = require('./aux-airtable')
@@ -17,7 +17,7 @@ async function bgRemoveURL(img_url, save_in){
     rmbg.removeBackgroundFromImageUrl({
         url,
         apiKey: bg_api_key,
-        size: "regular",
+        size: "auto",
         type: "person",
         output_path
 
@@ -30,14 +30,21 @@ async function bgRemoveURL(img_url, save_in){
             if (save_in['location'] == 'imgbb'){
                 imgbb_aux.toImgbbURL(base64img).then(res=> {
     
-                    save_in['img_url'] = res['url']
+                    save_in['img_url'] = res['url'] // image  url from the imgbb server
     
                     airtable_aux.updateImageField(save_in)    
                 })
-
+                
             } 
             else if (save_in['location'] == 'server_repo'){
-                // fs.writeFile(rmbg_filename, base64img)
+            
+            fs.writeFile('rmbg_filename.png', base64img, {
+                encoding: "base64" },
+              (err) => { if (err) console.log(err);
+            })
+            
+            save_in['img_url'] = '' // path to the image file (with domain) will be the url
+            airtable_aux.updateImageField(save_in)    
             }
 
         })

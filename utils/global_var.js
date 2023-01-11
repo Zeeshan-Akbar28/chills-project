@@ -18,6 +18,8 @@ airtable.configure({ apiKey: airtable_api_key })
 const base = airtable.base(base_id) // id of the base table
 const airtable_name = base(table_name) // table name
 
+// const raw_img_field = 'Original images'
+// const bg_removed_field = 'images without background'
 
 
 //* for remove.bg ------------------------------
