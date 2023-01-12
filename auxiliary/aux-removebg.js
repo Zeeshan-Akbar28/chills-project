@@ -17,15 +17,18 @@ async function bgRemoveURL(img_url, save_in){
     rmbg.removeBackgroundFromImageUrl({
         url,
         apiKey: bg_api_key,
-        size: "auto",
+        size: "full",
         type: "person",
+        format: "png",
+        crop: true, crop_margin: "20px",
         output_path
 
     })  .then(result => {
             // rmbg_filename = save_in['record']['fields']['Original images'][0]['filename'].split(".")[0]
             // rmbg_filename += "-images without background.png"
             
-            const base64img = result.base64img            
+            const base64img = result.base64img
+            console.log('SCRIPT_LOG: bg removed; credits charged: ', result['creditsCharged'])   
 
             if (save_in['location'] == 'imgbb'){
                 imgbb_aux.toImgbbURL(base64img).then(res=> {
