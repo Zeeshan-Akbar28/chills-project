@@ -41,7 +41,7 @@ function bgRemoveAndUpdate(){
     // Main code loop
     // ------------------------------------------------------------------------------------------
     
-const main_task = cron.schedule('*/5 * * * * *', ()=> {
+const main_task = cron.schedule('*/15 * * * * *', ()=> {
   try{
     bgRemoveAndUpdate()
   } 
