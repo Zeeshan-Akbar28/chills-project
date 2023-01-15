@@ -13,6 +13,7 @@ const bg_api_key = process.env.REMOVEBG_API_KEY
 const output_path = './img-removed-from-file.png'
 
 async function bgRemoveURL(img_url, save_in){
+
     const url = img_url
     rmbg.removeBackgroundFromImageUrl({
         url,
@@ -24,8 +25,7 @@ async function bgRemoveURL(img_url, save_in){
         output_path
 
     })  .then(result => {
-            // rmbg_filename = save_in['record']['fields']['Original images'][0]['filename'].split(".")[0]
-            // rmbg_filename += "-images without background.png"
+            let rmbg_filename = save_in['record']['id'] + '.png'
             
             const base64img = result.base64img
             console.log('SCRIPT_LOG: bg removed; credits charged: ', result['creditsCharged'])   
@@ -41,9 +41,9 @@ async function bgRemoveURL(img_url, save_in){
             } 
             else if (save_in['location'] == 'server_repo'){
             
-            fs.writeFile('rmbg_filename.png', base64img, {
-                encoding: "base64" },
-              (err) => { if (err) console.log(err);
+                fs.writeFile('./download_dir/' + String(rmbg_filename), base64img, {
+                    encoding: "base64" },
+                (err) => { if (err) console.log(err);
             })
             
             save_in['img_url'] = '' // path to the image file (with domain) will be the url

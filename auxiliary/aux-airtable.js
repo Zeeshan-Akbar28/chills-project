@@ -1,12 +1,36 @@
 const global_var =  require('./../utils/global_var')
-
+const request = require('request');
+const fs = require('fs')
 
 // initializing the airtable
 
 airtable_view = global_var.airtable_name
 
 
+function downloadAllImgs(){
+  airtable_view.select({}).eachPage((records, fetchNextPage) =>{
+    
+    records.forEach( record => {
+      if (record.get("Original images")){
+        record.get("Original images").forEach(img => {  
+          let img_url = img['url']
 
+          request.head(img_url, function(err, res, body){
+            let filename = './download_dir/' + String(Date.now()) + '.jpg'
+        
+            request(img_url).pipe(fs.createWriteStream(filename))
+
+          });
+        
+
+          
+        })
+      }
+
+    })
+  
+  })
+}
 
 function updateImageField(save_in){
 
@@ -34,5 +58,6 @@ function updateImageField(save_in){
 
 module.exports = {
     updateImageField,
+    downloadAllImgs
 
 }
