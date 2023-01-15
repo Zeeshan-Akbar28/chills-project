@@ -53,7 +53,7 @@ app.listen(PORT, () => {
       
       
   //* ------------------------------------------------------------------------
-  cron.schedule('*/25 * * * * *', ()=> {  // 
+  cron.schedule('*/30 * * * * *', ()=> {  // 
     try{
       bgRemoveAndUpdate()
       console.log('cron_1')
