@@ -24,8 +24,8 @@ async function bgRemoveAndUpdate(){
 
         record.get("Original images").forEach(img => {  
 
-        // let save_in = {'location': 'imgbb', 'record': record, 'img_url': ''}  
-        let save_in = {'location': 'server_repo', 'record': record, 'img_url': ''}  
+        let save_in = {'location': 'imgbb', 'record': record, 'img_url': ''}  
+        // let save_in = {'location': 'server_repo', 'record': record, 'img_url': ''}  
         removebg_aux.bgRemoveURL(img['url'], save_in)
             
             
