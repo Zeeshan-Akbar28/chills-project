@@ -10,7 +10,7 @@ const PORT = 8000;
  
 // Function to serve all static files inside public directory.
 app.use(express.static('public')); 
-app.use('/images', express.static('images'));
+app.use('/img', express.static('./images'));
 
 // airtable_view = global_var.airtable_name
 
@@ -24,8 +24,8 @@ async function bgRemoveAndUpdate(){
 
         record.get("Original images").forEach(img => {  
 
-        let save_in = {'location': 'imgbb', 'record': record, 'img_url': ''}  
-        // let save_in = {'location': 'server_repo', 'record': record, 'img_url': ''}  
+        // let save_in = {'location': 'imgbb', 'record': record, 'img_url': ''}  
+        let save_in = {'location': 'server_repo', 'record': record, 'img_url': ''}  
         removebg_aux.bgRemoveURL(img['url'], save_in)
             
             
@@ -53,7 +53,7 @@ app.listen(PORT, () => {
       
       
   //* ------------------------------------------------------------------------
-  cron.schedule('*/30 * * * * *', ()=> {  // 
+  cron.schedule('*/20 * * * * *', ()=> {  // 
     try{
       bgRemoveAndUpdate()
       console.log('cron_1')
@@ -62,17 +62,6 @@ app.listen(PORT, () => {
     
   })
 
-  
-  // cron.schedule('*/5 * * * * *', ()=> {  // 
-  //   try{
-  //     //TODO : write function to delete the images on server hosting.
-  //     //TODO : run it at night time when there is no activity
-  //     console.log('cron_2')
-  //   } 
-  //   catch(er) { console.log(JSON.stringify(er), 'here in index.js cron job')}
-    
-  // })
-  
 
   //* ------------------------------------------------------------------------
     

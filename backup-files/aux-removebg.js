@@ -53,10 +53,7 @@ async function bgRemoveURL(img_url, save_in){
             }
 
         })
-        .catch(er => {
-            console.log(JSON.stringify(er), 'here in aux-removebg' );
-            return;
-        })
+        .catch(er => console.log(JSON.stringify(er), 'here in aux-removebg' ))
         
 }
 
